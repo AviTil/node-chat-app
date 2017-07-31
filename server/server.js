@@ -12,13 +12,21 @@ var app = express()
 var server = http.createServer(app)
 var io = socketIO(server)
 
-app.get('/', function(req, res){
-    res.sendFile(publicPath+'/index.html')
-})
+app.use(express.static(publicPath))
 
 
 io.on('connection', function(socket){
     console.log("New user connected")
+    
+    socket.emit('newMessage', {
+        from: "Tony",
+        text: "Hey there",
+        createdAt: 123
+    })
+    
+    socket.on('createMessage', function(message){
+        console.log(message)
+    })
     
     socket.on('disconnect', function(){
         console.log("User disconnected")
