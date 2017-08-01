@@ -14,3 +14,6 @@
         socket.on('newMessage', function(message){
             console.log(message)
         })
+
+
+    
