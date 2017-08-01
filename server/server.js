@@ -30,10 +30,10 @@ io.on('connection', function(socket){
     
     // io.emit send event to ALL clients
     
-    socket.on('createMessage', function(message){
+    socket.on('createMessage', function(message, callback){
         console.log(message)
         io.emit('newMessage', generateMessage(message.from, message.text))
-        
+        callback('This is from the server')
         
     })
     
