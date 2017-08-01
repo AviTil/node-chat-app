@@ -3,11 +3,6 @@
         socket.on('connect', function(){
             console.log('Connected to server')
         
-            socket.emit('createMessage', {
-            from: 'Jennifer',
-            text: 'how are you'
-            })
-            
         })
 
 
