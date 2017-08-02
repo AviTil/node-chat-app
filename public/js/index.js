@@ -10,11 +10,14 @@
             console.log('Disconnected from server')
         })
 
+        // code to display new messages on client side
 
         socket.on('newMessage', function(message){
             
+            var formattedTime = moment(message.createdAt).format('h:mm a')
+            
             var li = $("<li></li>")
-            li.text(message.from+": "+message.text)
+            li.text(message.from+" ("+formattedTime+"): "+message.text)
             
             $("#messages").append(li)
         })
@@ -24,9 +27,12 @@
             
             var li = $("<li></li>")
             
-            var a = $('<a target="_blank">My current location</a>')
+            var a = $('<a target="_blank"> My current location</a>')
             
-            li.text(message.from)
+            var formattedTime = moment(message.createdAt).format('h: mm a')
+            
+            
+            li.text(message.from+' ('+formattedTime+'): ')
             a.attr('href', message.url)
             
             li.append(a)
@@ -36,14 +42,19 @@
         })
 
 
+        // code to send messages from client side to server
+        
+        var messageTextbox = $("[name=message]")
+
+
         $("#message-form").on('submit', function(e){
             e.preventDefault()
             
             socket.emit('createMessage', {
                 from: 'User',
-                text: $("[name=message]").val()
+                text: messageTextbox.val()
             }, function(){
-                
+               messageTextbox.val("") 
             })
         })
 
@@ -55,13 +66,19 @@
                 return alert('Unsupported in browser')
             }
             
+           
+            locationButton.attr('disabled', 'disabled').text('Sending Location..')
             navigator.geolocation.getCurrentPosition(function(position){
                 socket.emit('createLocationMessage', {
                     latitude: position.coords.latitude,
                     longitude: position.coords.longitude
                 })
+                
+                locationButton.removeAttr('disabled').text('Send Location')
+                
             }, function(){
                 alert('Unable to fetch location')
+                locationButton.removeAttr('disabled').text('Send Location')
             })
             
         })

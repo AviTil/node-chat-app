@@ -5,35 +5,56 @@
     
     <meta charset="utf-8">
     
+    <link rel="stylesheet" href="css/styles.css">
+    
 </head>
 
-<body>
-
-    <p>Hello, welcome to the chat app</p>
-    
-    
-    <ul id="messages" style="list-style-type: none">
+<body class="chat">
 
     
-    </ul>
-    
-    
-    
-    <form id="message-form">
+    <div class="chat__sidebar">
         
-        <input name="message" type="text" placeholder="Enter Message"/>
+        <h3>Participants</h3>
+        <div id="users"></div>
         
-        <button>Send</button>
+    </div>
     
-    </form>
     
-    <button id="send-location">Share Location</button>
+    <div class="chat__main">
+    
+        
+         <ul id="messages" class="chat__messages" style="list-style-type: none">
+         </ul>
+        
+        <div  class="chat__footer">
+        
+            <form id="message-form">
+
+                <input name="message" type="text" placeholder="Enter Message" autofocus autocomplete="off"/>
+
+                <button>Send</button>
+
+            </form>
+
+            <button id="send-location">Share Location</button>
+        
+            
+        </div>
+    
+        
+    
+    </div>
+    
+    
+   
     
     
     
     <script type="text/javascript" src="/socket.io/socket.io.js"></script>
     
     <script type="text/javascript" src="./js/libs/jquery-3.2.1.min.js"></script>
+    
+    <script type="text/javascript" src="./js/libs/moment.js"></script>
     
     <script type="text/javascript"  src="./js/index.js"></script>
     
